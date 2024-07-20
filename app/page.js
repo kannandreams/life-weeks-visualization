@@ -2,20 +2,41 @@
 "use client";
 
 import React, { useState } from 'react';
-import SettingsForm from './SettingsForm';
-import LifeWeeks from './LifeWeeks';
+import dynamic from "next/dynamic";
+
+const WeeksCalendar = dynamic(() => import("./WeeksCalendar"), {
+  ssr: false,
+});
 
 const HomePage = () => {
-  const [settings, setSettings] = useState({
-    birthDate: '1984-10-24',
-    lifeExpectancy: 80,
-  });
+  const [birthdate, setBirthdate] = useState("");
+  const [age, setAge] = useState("");
 
   return (
     <div>
-      <SettingsForm onSubmit={setSettings} />
-      <LifeWeeks birthDate={settings.birthDate} targetAge={settings.lifeExpectancy} />
+    <h1>Weeks Calendar</h1>
+    <div>
+      <label>
+        Birthdate:
+        <input
+          type="date"
+          value={birthdate}
+          onChange={(e) => setBirthdate(e.target.value)}
+        />
+      </label>
     </div>
+    <div>
+      <label>
+        Lifespan (years):
+        <input
+          type="number"
+          value={age}
+          onChange={(e) => setAge(e.target.value)}
+        />
+      </label>
+    </div>
+    <WeeksCalendar birthdate={birthdate} age={age} />
+  </div>
   );
 };
 

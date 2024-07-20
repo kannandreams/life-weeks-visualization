@@ -56,13 +56,14 @@ const WeeksCalendar = ({ birthdate, age }) => {
             y: "week",
             fill: d => 
               d.weekIndex <= currentWeekIndex 
-              ? "red" 
-              : "green",
+              ? "#EC7063" 
+              : "#58D68D",
           }
         ),
       ],
       color: {
         scheme: "piyg",
+        domain: [-6, 6],
       },
       x: {
         label: "Years",

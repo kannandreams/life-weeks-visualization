@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import * as Plot from "@observablehq/plot";
-import { parseISO, differenceInDays, addWeeks, format, getISOWeek } from "date-fns";
+import { parseISO, differenceInDays, addWeeks, lastDayOfWeek, getISOWeekYear, format, getISOWeek } from "date-fns";
 
 const WeeksCalendar = ({ birthdate, age }) => {
   const plotRef = useRef();
@@ -12,32 +12,31 @@ const WeeksCalendar = ({ birthdate, age }) => {
     if (!birthdate || !age) return;
 
     const birthDateObj = parseISO(birthdate);
-    const birthYear = birthDateObj.getFullYear();
-    const birthWeek = getISOWeek(birthDateObj);
 
     const numWeeks = age * 52;
     const currentDate = new Date();
-    const currentWeekOfYear = getISOWeek(currentDate);
-
-    const currentWeekIndex = differenceInDays(currentDate, birthDateObj) / 7;
+    const currentWeekIndex = differenceInDays(currentDate, birthDateObj)/7;
     const totalDaysLived = differenceInDays(currentDate, birthDateObj);
     const totalDaysAhead = (age * 365.25) - totalDaysLived;
 
     setTotalDaysLived(Math.floor(totalDaysLived));
     setTotalDaysAhead(Math.ceil(totalDaysAhead));
-
+    console.log(numWeeks)
     const data = [];
+    
     for (let i = 0; i < numWeeks; i++) {
-      const weekDate = addWeeks(birthDateObj, i);
-      const year = weekDate.getFullYear();
-      const weekOfYear = getISOWeek(weekDate);
+      const weekDate = addWeeks(lastDayOfWeek(birthDateObj, { weekStartsOn: 1 }), i);
+      const year = getISOWeekYear(weekDate);
+      let weekOfYear = getISOWeek(weekDate);
+    //   if (weekOfYear > 52) weekOfYear = 52; // Handle the 53rd week
       data.push({
         year,
         week: weekOfYear,
         weekIndex: i,
+        weekDate: format(weekDate, "yyyy-MM-dd"),
       });
     }
-
+    console.log(data);
     // Calculate dimensions to handle large number of years
     const plotWidth = Math.max(age * 15, 800); // Adjust the multiplier as needed for better spacing
     const plotHeight = 600; // Adjust height based on your preference
@@ -56,22 +55,22 @@ const WeeksCalendar = ({ birthdate, age }) => {
             y: "week",
             fill: d => 
               d.weekIndex <= currentWeekIndex 
-              ? "#EC7063" 
+              ? "#000000" 
               : "#58D68D",
           }
         ),
       ],
       color: {
         scheme: "piyg",
-        domain: [-6, 6],
       },
       x: {
         label: "Years",
-        ticks: Array.from({ length: Math.ceil(age / 10) + 1 }, (_, i) => birthYear + i * 10),
+        ticks: Array.from({ length: Math.ceil(age / 10) + 1 }, (_, i) => birthDateObj.getFullYear() + i * 10),
       },
       y: {
         label: "Weeks",
         tickFormat: d => d.toFixed(0),
+       
       },
       width: plotWidth,
       height: plotHeight,
@@ -83,9 +82,9 @@ const WeeksCalendar = ({ birthdate, age }) => {
   return (
     <div>
       <div>
-        <p>You were born on {birthdate}</p>
-        <p>You have lived {totalDaysLived} days already</p>
-        <p>You have {totalDaysAhead} days ahead of you, to lifespan end date</p>
+        <p>You were born on <b>{birthdate}</b></p>
+        <p>You have lived <b>{totalDaysLived}</b> days already</p>
+        <p>You have <b>{totalDaysAhead}</b> days ahead of you, to lifespan end date</p>
       </div>
       <div ref={plotRef}></div>
     </div>

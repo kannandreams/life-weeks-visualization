@@ -7,7 +7,6 @@ import {
   Group,
   Text,
   Menu,
-  Tabs,
   Burger,
   rem,
   useMantineTheme,
@@ -15,21 +14,17 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import {
   IconLogout,
-  IconHeart,
-  IconStar,
-  IconMessage,
   IconSettings,
-  IconPlayerPause,
-  IconTrash,
-  IconSwitchHorizontal,
   IconChevronDown,
 } from '@tabler/icons-react';
+import { Grid } from '@mantine/core';
+
 import { MantineLogo } from '@mantinex/mantine-logo';
 import classes from './HeaderTabs.module.css';
 
 const user = {
-  name: 'Kannan',
-  email: 'kannan@x.com',
+  name: 'User',
+  email: 'user@x.com',
   image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-2.png',
 };
 
@@ -41,12 +36,14 @@ export function HeaderTabs() {
 
   return (
     <div className={classes.header}>
-      <Container className={classes.mainSection} size="md">
-        <Group justify="space-between">
-          <MantineLogo size={28} />
-
+      <Grid>
+      <Grid.Col span={3} >
+        <MantineLogo size={28} />
+      </Grid.Col>
+      <Grid.Col span={3}></Grid.Col>
+      <Grid.Col span={3} offset={3}>      
+        <Container className={classes.mainSection} size="md">
           <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
-
           <Menu
             width={260}
             position="bottom-end"
@@ -92,10 +89,11 @@ export function HeaderTabs() {
               
             </Menu.Dropdown>
           </Menu>
-        </Group>
       </Container>
-      <Container size="md">
-      </Container>
+      </Grid.Col>
+    </Grid>
+    
+
     </div>
   );
 }

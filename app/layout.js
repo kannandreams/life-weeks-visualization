@@ -31,7 +31,7 @@ export default function RootLayout({ children }) {
       </head>
       <body
         style={{
-          padding: '20px',
+          padding: '10px',
           backgroundColor: theme.colors.customBackground,
         }}
       >

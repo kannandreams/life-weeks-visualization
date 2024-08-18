@@ -1,94 +1,126 @@
-import { useEffect, useRef, useState } from "react";
-import * as Plot from "@observablehq/plot";
-import { parseISO, differenceInDays, addWeeks, lastDayOfWeek, getISOWeekYear, format, getISOWeek } from "date-fns";
+import { useEffect, useRef, useState } from 'react'
+import * as Plot from '@observablehq/plot'
+import {
+  parseISO,
+  differenceInDays,
+  addWeeks,
+  lastDayOfWeek,
+  getISOWeekYear,
+  format,
+  getISOWeek,
+} from 'date-fns'
 
 const WeeksCalendar = ({ birthdate, age }) => {
-  const plotRef = useRef();
+  const plotRef = useRef()
 
-  const [totalDaysLived, setTotalDaysLived] = useState(0);
-  const [totalDaysAhead, setTotalDaysAhead] = useState(0);
+  const [totalDaysLived, setTotalDaysLived] = useState(0)
+  const [totalDaysAhead, setTotalDaysAhead] = useState(0)
+  const [selectedWeek, setSelectedWeek] = useState(null)
 
   useEffect(() => {
-    if (!birthdate || !age) return;
+    if (!birthdate || !age) return
 
-    const birthDateObj = parseISO(birthdate);
+    const birthDateObj = parseISO(birthdate)
 
-    const numWeeks = age * 52;
-    const currentDate = new Date();
-    const currentWeekIndex = differenceInDays(currentDate, birthDateObj)/7;
-    const totalDaysLived = differenceInDays(currentDate, birthDateObj);
-    const totalDaysAhead = (age * 365.25) - totalDaysLived;
+    const numWeeks = age * 52
+    const currentDate = new Date()
+    const currentWeekIndex = differenceInDays(currentDate, birthDateObj) / 7
+    const totalDaysLived = differenceInDays(currentDate, birthDateObj)
+    const totalDaysAhead = age * 365.25 - totalDaysLived
 
-    setTotalDaysLived(Math.floor(totalDaysLived));
-    setTotalDaysAhead(Math.ceil(totalDaysAhead));
+    setTotalDaysLived(Math.floor(totalDaysLived))
+    setTotalDaysAhead(Math.ceil(totalDaysAhead))
     console.log(numWeeks)
-    const data = [];
-    
+    const data = []
+
     for (let i = 0; i < numWeeks; i++) {
-      const weekDate = addWeeks(lastDayOfWeek(birthDateObj, { weekStartsOn: 1 }), i);
-      const year = getISOWeekYear(weekDate);
-      let weekOfYear = getISOWeek(weekDate);
-    //   if (weekOfYear > 52) weekOfYear = 52; // Handle the 53rd week
+      const weekDate = addWeeks(
+        lastDayOfWeek(birthDateObj, { weekStartsOn: 1 }),
+        i
+      )
+      const year = getISOWeekYear(weekDate)
+      let weekOfYear = getISOWeek(weekDate)
+      //   if (weekOfYear > 52) weekOfYear = 52; // Handle the 53rd week
       data.push({
         year,
         week: weekOfYear,
         weekIndex: i,
-        weekDate: format(weekDate, "yyyy-MM-dd"),
-      });
+        weekDate: format(weekDate, 'yyyy-MM-dd'),
+      })
     }
-    console.log(data);
+    console.log(data)
     // Calculate dimensions to handle large number of years
-    const plotWidth = Math.max(age * 15, 800); // Adjust the multiplier as needed for better spacing
-    const plotHeight = 600; // Adjust height based on your preference
+    const plotWidth = Math.max(age * 15, 1000) // Adjust the multiplier as needed for better spacing
+    const plotHeight = 800 // Adjust height based on your preference
 
     // Remove any existing plots
     if (plotRef.current) {
-      plotRef.current.innerHTML = '';
+      plotRef.current.innerHTML = ''
     }
 
     const plot = Plot.plot({
       marks: [
-        Plot.cell(
-          data,
-          {
-            x: "year",
-            y: "week",
-            fill: d => 
-              d.weekIndex <= currentWeekIndex 
-              ? "#000000" 
-              : "#58D68D",
-          }
-        ),
+        Plot.cell(data, {
+          x: 'year',
+          y: 'week',
+          fill: (d) =>
+            d.weekIndex <= currentWeekIndex
+              ? //? "#000000"
+                selectedWeek === d.weekIndex
+                ? 'blue'
+                : '#000000'
+              : '#58D68D',
+          // onClick: (d) => handleCellClick(d),
+          title: (d) => `Year: ${d.year}, Week: ${d.week}`, // Tooltip
+        }),
       ],
       color: {
-        scheme: "piyg",
+        scheme: 'piyg',
       },
       x: {
-        label: "Years",
-        ticks: Array.from({ length: Math.ceil(age / 10) + 1 }, (_, i) => birthDateObj.getFullYear() + i * 10),
+        label: 'Years',
+        ticks: Array.from(
+          { length: Math.ceil(age / 10) + 1 },
+          (_, i) => birthDateObj.getFullYear() + i * 10
+        ),
       },
       y: {
-        label: "Weeks",
-        tickFormat: d => d.toFixed(0),
-       
+        label: 'Weeks',
+        tickFormat: (d) => d.toFixed(0),
       },
       width: plotWidth,
       height: plotHeight,
-    });
+    })
 
-    plotRef.current.append(plot);
-  }, [birthdate, age]);
+    plotRef.current.append(plot)
+    // const cells = plotRef.current.querySelectorAll('rect');
+    // cells.forEach((cell, index) => {
+    //   cell.addEventListener('click', () => handleCellClick(data[index]));
+    // });
+  }, [birthdate, age])
+
+  //   const handleCellClick = (d) => {
+  //     setSelectedWeek(d.weekIndex);
+  //     alert(`You selected Week ${d.week} of Year ${d.year}`);
+  //     // Additional actions based on selection can be added here
+  //   };
 
   return (
     <div>
       <div>
-        <p>You were born on <b>{birthdate}</b></p>
-        <p>You have lived <b>{totalDaysLived}</b> days already</p>
-        <p>You have <b>{totalDaysAhead}</b> days ahead of you, to lifespan end date</p>
+        <p>
+          You have lived <b>{totalDaysLived}</b> days already
+        </p>
+        <p>
+          You have <b>{totalDaysAhead}</b> days ahead of you.
+        </p>
+        <i>
+          "Lost time is never found again." - Benjamin Franklin
+        </i>
       </div>
       <div ref={plotRef}></div>
     </div>
-  );
-};
+  )
+}
 
-export default WeeksCalendar;
+export default WeeksCalendar

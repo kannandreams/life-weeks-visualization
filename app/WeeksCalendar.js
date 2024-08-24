@@ -115,7 +115,7 @@ const WeeksCalendar = ({ birthdate, age }) => {
           You have <b>{totalDaysAhead}</b> days ahead of you.
         </p>
         <i>
-          "Lost time is never found again." - Benjamin Franklin
+        &quot;Lost time is never found again.&quot; - Benjamin Franklin
         </i>
       </div>
       <div ref={plotRef}></div>

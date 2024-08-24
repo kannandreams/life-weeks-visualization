@@ -20,8 +20,8 @@ const Credits = ({}) => {
                 Epic Sheets
               </a>
             </b>
-            , for the inspiration and the idea to convert the "30,000 Days of
-            Your Life" Excel sheet into a web app.
+            , for the inspiration and the idea to convert the &quot; 30,000 Days of
+            Your Life &quot; Excel sheet into a web app.
           </p>
 
           <p>Inspired by:</p>
@@ -39,7 +39,7 @@ const Credits = ({}) => {
                 href="http://news.mit.edu/2013/commencement-address-houston-0607"
                 target="_blank"
               >
-                Dropbox's founder Drew Houston
+                Dropbox&apos;s founder Drew Houston
               </a>
             </li>
             <li>

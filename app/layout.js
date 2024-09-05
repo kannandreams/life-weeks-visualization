@@ -1,4 +1,5 @@
 import { Inter } from 'next/font/google'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import { createTheme, ColorSchemeScript, MantineProvider } from '@mantine/core'
 import '@mantine/core/styles.css'
 const inter = Inter({ subsets: ['latin'] })
@@ -35,6 +36,7 @@ export default function RootLayout({ children }) {
           backgroundColor: theme.colors.customBackground,
         }}
       >
+        <GoogleAnalytics gaId="G-BJW9SXM11H" />
         <MantineProvider theme={theme}>{children}</MantineProvider>
       </body>
     </html>

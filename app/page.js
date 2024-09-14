@@ -7,6 +7,9 @@ import { Grid } from '@mantine/core'
 import { DateInput } from '@mantine/dates'
 import SponserCoffee from './SponserCoffee'
 import Credits from './Credits'
+import html2canvas from 'html2canvas'
+import SocialShareButtons from './SocialShareButtons'
+
 import {
   useMantineTheme,
   Button,
@@ -21,6 +24,17 @@ import {
 // })
 
 import WeeksCalendar from './WeeksCalendar'
+
+const exportToPNG = () => {
+  const timelineElement = document.getElementById('timeline-visualization')
+
+  html2canvas(timelineElement).then((canvas) => {
+    const link = document.createElement('a')
+    link.download = 'timeline.png'
+    link.href = canvas.toDataURL()
+    link.click()
+  })
+}
 
 const HomePage = () => {
   const theme = useMantineTheme()
@@ -45,12 +59,25 @@ const HomePage = () => {
         }}
       >
         {/* Left-aligned element */}
-        <div style={{ padding: '0px', color: '#000000', fontSize: '20px', fontWeight: 'bold' }}>
+        
+        <div
+          style={{
+            padding: '0px',
+            color: '#000000',
+            fontSize: '20px',
+            fontWeight: 'bold',
+          }}
+        >
           <h1>Life Timeline</h1>
         </div>
         <div style={{ display: 'flex', gap: '10px' }}>
           <SponserCoffee />
           <Credits />
+          <SocialShareButtons
+            url="https://www.timeline4.me/"
+            title="Life Timeline!"
+            summary="See the weeks you’ve lived and the ones still ahead!"
+          />
         </div>
       </div>
       {/* <Group position="right" align="right" gap="md" justify="end">
@@ -70,16 +97,6 @@ const HomePage = () => {
               wrap="wrap"
               direction="row"
             >
-              {/* <DateInput
-              className="custom-date-input"
-                size="md"
-                variant="filled"
-                label="Date of Birth"
-                value={birthdate}
-                valueFormat="DD/MM/YYYY"
-                onChange={(date) => setBirthdate(date)}
-                placeholder="Date input"
-              /> */}
               <TextInput
                 size="md"
                 type="date"
@@ -116,7 +133,21 @@ const HomePage = () => {
               >
                 Visualize
               </Button>
+
+              {age !== '' && age > 0 && (
+                <Button
+                  id="btnPrint"
+                  variant="filled"
+                  color="rgba(0, 0, 0, 1)"
+                  size="md"
+                  radius="xs"
+                  onClick={exportToPNG}
+                >
+                  Export
+                </Button>
+              )}
             </Flex>
+
             {showVisualization && (
               <WeeksCalendar birthdate={birthdate} age={age} />
             )}

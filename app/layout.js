@@ -15,8 +15,7 @@ const theme = createTheme({
 })
 
 export const metadata = {
-  title: 'Mantine Next.js template',
-  description: 'I am using Mantine with Next.js!',
+  title: 'Timeline 4 Me'
 }
 
 export default function RootLayout({ children }) {

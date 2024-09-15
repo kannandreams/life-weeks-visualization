@@ -8,7 +8,7 @@ import { AiFillInstagram } from "react-icons/ai";
 
 const SocialShareButtons = ({ url, title, summary }) => (
   <div>
-    <FacebookShareButton url={url} quote={summary}>
+    <FacebookShareButton url={url} >
     <AiFillFacebook size={46}/>
     </FacebookShareButton>
     <TwitterShareButton url={url} title={title}>

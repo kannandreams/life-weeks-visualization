@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import * as Plot from '@observablehq/plot'
+
 import {
   parseISO,
   differenceInDays,
@@ -9,6 +10,7 @@ import {
   format,
   getISOWeek,
 } from 'date-fns'
+
 
 const WeeksCalendar = ({ birthdate, age }) => {
   const plotRef = useRef()
@@ -106,7 +108,7 @@ const WeeksCalendar = ({ birthdate, age }) => {
   //   };
 
   return (
-    <div>
+    <div id="timeline-visualization">
       <div>
         <p>
           You have lived <b>{totalDaysLived}</b> days already
@@ -114,11 +116,10 @@ const WeeksCalendar = ({ birthdate, age }) => {
         <p>
           You have <b>{totalDaysAhead}</b> days ahead of you.
         </p>
-        <i>
-        &quot;Lost time is never found again.&quot; - Benjamin Franklin
-        </i>
+        <i>&quot;Lost time is never found again.&quot; - Benjamin Franklin</i>
       </div>
       <div ref={plotRef}></div>
+      
     </div>
   )
 }

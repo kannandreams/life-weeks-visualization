@@ -69,6 +69,7 @@ const HomePage = () => {
           }}
         >
           <h1>Life Timeline</h1>
+          
         </div>
         <div style={{ display: 'flex', gap: '10px' }}>
           <SponserCoffee />
@@ -146,10 +147,15 @@ const HomePage = () => {
                   Export
                 </Button>
               )}
+
+
             </Flex>
 
             {showVisualization && (
+              <div>
               <WeeksCalendar birthdate={birthdate} age={age} />
+             
+                </div>
             )}
           </div>
         </Grid.Col>

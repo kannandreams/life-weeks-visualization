@@ -11,7 +11,6 @@ import {
   getISOWeek,
 } from 'date-fns'
 
-
 const WeeksCalendar = ({ birthdate, age }) => {
   const plotRef = useRef()
 
@@ -95,17 +94,7 @@ const WeeksCalendar = ({ birthdate, age }) => {
     })
 
     plotRef.current.append(plot)
-    // const cells = plotRef.current.querySelectorAll('rect');
-    // cells.forEach((cell, index) => {
-    //   cell.addEventListener('click', () => handleCellClick(data[index]));
-    // });
   }, [birthdate, age])
-
-  //   const handleCellClick = (d) => {
-  //     setSelectedWeek(d.weekIndex);
-  //     alert(`You selected Week ${d.week} of Year ${d.year}`);
-  //     // Additional actions based on selection can be added here
-  //   };
 
   return (
     <div id="timeline-visualization">
@@ -116,10 +105,8 @@ const WeeksCalendar = ({ birthdate, age }) => {
         <p>
           You have <b>{totalDaysAhead}</b> days ahead of you.
         </p>
-        <i>&quot;Lost time is never found again.&quot; - Benjamin Franklin</i>
       </div>
       <div ref={plotRef}></div>
-      
     </div>
   )
 }

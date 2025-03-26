@@ -1,22 +1,22 @@
 
-import { FacebookShareButton, TwitterShareButton, InstapaperShareButton } from 'react-share';
-import { AiFillFacebook } from "react-icons/ai";
-import { AiFillTwitterSquare } from "react-icons/ai";
-import { AiFillInstagram } from "react-icons/ai";
+import { FacebookShareButton, TwitterShareButton, LinkedinShareButton } from 'react-share';
+import { AiOutlineFacebook } from "react-icons/ai";
+import { AiOutlineX } from "react-icons/ai";
+import { AiOutlineLinkedin } from "react-icons/ai";
 
 
 
-const SocialShareButtons = ({ url, title, summary }) => (
+const SocialShareButtons = ({ url, summary }) => (
   <div>
-    <FacebookShareButton url={url} >
-    <AiFillFacebook size={46}/>
+    <FacebookShareButton url={url} title={summary} >
+    <AiOutlineFacebook size={46}/>
     </FacebookShareButton>
-    <TwitterShareButton url={url} title={title}>
-    <AiFillTwitterSquare size={46}/>
+    <TwitterShareButton url={url} title={summary}>
+    <AiOutlineX size={46}/>
     </TwitterShareButton>
-    <InstapaperShareButton url={url} title={title}>
-    <AiFillInstagram size={46}/>
-    </InstapaperShareButton>
+    <LinkedinShareButton url={url} title={summary}>
+    <AiOutlineLinkedin size={46}/>
+    </LinkedinShareButton>
   </div>
 );
 

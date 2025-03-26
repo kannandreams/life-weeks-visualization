@@ -47,7 +47,7 @@ export default function RootLayout({ children }) {
         style={{
           padding: '10px',
           backgroundColor: theme.colors.customBackground,
-          overflow: 'hidden', // Prevent scrolling on the body
+          overflow: 'auto', // Prevent scrolling on the body
         }}
       >
         <MantineProvider theme={theme}>

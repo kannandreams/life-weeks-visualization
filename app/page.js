@@ -57,28 +57,7 @@ const HomePage = () => {
       birthdate: '',
       age: '',
     },
-    // validate: {
-    //   birthdate: (value) => {
-    //     if (!value) {
-    //       return 'Date of Birth is required';
-    //     }
-    //     const birthYear = new Date(value).getFullYear();
-    //     if (birthYear < 1900 || birthYear > currentYear) {  // Adjust the acceptable range as needed.
-    //       return 'Please enter a valid birth year.';
-    //     }
-    //     return null;
-    //   },
-      // age: (value) => {
-      //   if (!value) {
-      //     return 'Age is required';
-      //   }
-      //   const ageValue = parseInt(value, 10);
-      //   if (isNaN(ageValue) || ageValue < 0 || ageValue > 120) {
-      //     return 'Age must be a number between 0 and 120';
-      //   }
-      //   return null;
-      // },
-    // },
+   
   });
 
   return (
@@ -127,9 +106,7 @@ const HomePage = () => {
                     const newValue = e.target.value;
                     form.setFieldValue('age', newValue);
                     setAge(newValue)
-                    // document
-                    //   .getElementById('btnVisualize')
-                    //   .removeAttribute('disabled')
+
                   }}
                   
                 />

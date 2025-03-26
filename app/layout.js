@@ -1,6 +1,8 @@
 'use client'
 import { Inter } from 'next/font/google'
 import { GoogleAnalytics } from '@next/third-parties/google'
+import { Metadata } from 'next';
+
 import {
   createTheme,
   AppShell,
@@ -9,6 +11,7 @@ import {
   Title,
   Text,
   Box,
+  Flex
 } from '@mantine/core'
 import '@mantine/core/styles.css'
 import SponserCoffee from './SponserCoffee'
@@ -16,6 +19,9 @@ import Credits from './Credits'
 import SocialShareButtons from './SocialShareButtons'
 
 const inter = Inter({ subsets: ['latin'] })
+
+import { metadata } from './metadata'
+
 
 const theme = createTheme({
   /** Put your mantine theme override here */
@@ -27,55 +33,60 @@ const theme = createTheme({
   },
 })
 
-
-
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={inter.className} >
+    <html lang="en" className={inter.className}>
       <head>
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
+          metadata={metadata}
         />
       </head>
       <body
         style={{
           padding: '10px',
           backgroundColor: theme.colors.customBackground,
+          overflow: 'hidden', // Prevent scrolling on the body
         }}
       >
         <MantineProvider theme={theme}>
-          <AppShell layout="alt" header={{ height: 60 }} padding="md">
+          <AppShell layout="default" header={{ height: 70 }} padding="md">
             <AppShell.Header>
               <Box
+                padding="xl"
                 style={{
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
                   height: '100%',
-                  padding: '20px 16px 16px 30px',
                   width: '100%',
-                  // backgroundColor: theme.colors.customBackground
+                  backgroundColor: theme.colors.customBackground,
                 }}
               >
-                <Group h="100%" px="md">
+                <Group px="md">
                   <Title>timeline4.me</Title>
                 </Group>
-                <Group align="center">
-                <Text fs="italic">&quot;Lost time is never found again.&quot; - Benjamin Franklin</Text>
-                  <SponserCoffee />
+                <Group align="center" px="md">
                   <Credits />
-                  {/* <SocialShareButtons
-                      url="https://www.timeline4.me/"
-                      title="Life Timeline!"
-                      summary="See the weeks you’ve lived and the ones still ahead!"
-                    /> */}
+                  <SponserCoffee />
+                  <SocialShareButtons
+                    url="https://www.timeline4.me/"
+                    summary="See the weeks you’ve lived and the ones still ahead!"
+                  />
                 </Group>
               </Box>
             </AppShell.Header>
             <AppShell.Main>
               <GoogleAnalytics gaId="G-BJW9SXM11H" />
-              {children}
+              <Box
+                style={{
+                  overflow: 'hidden', // Prevent scrolling for the children section
+                  height: '100%', // Ensure it takes up the full height
+                }}
+              >
+                {children}
+              </Box>
             </AppShell.Main>
           </AppShell>
         </MantineProvider>

@@ -1,5 +1,5 @@
 import { useDisclosure } from '@mantine/hooks'
-import { Modal, Button, Box, Text, Title, Divider } from '@mantine/core'
+import { Modal, Button, Box, Group, Text, Title, Divider } from '@mantine/core'
 
 const Credits = ({}) => {
   const [opened, { open, close }] = useDisclosure(false)
@@ -7,6 +7,7 @@ const Credits = ({}) => {
   return (
     <Box>
       <Modal opened={opened} size="60%" onClose={close} >
+        <Group p="md">
         <Title order={3}>Credits</Title>
         <Text fw={700}>
           <a
@@ -18,8 +19,9 @@ const Credits = ({}) => {
           for the inspiration and the idea to convert the &quot; 30,000 Days of
           Your Life &quot; Excel sheet into a web app.
         </Text>
+        </Group>
         <Divider />
-        <Text>Inspired from:</Text>
+        {/* <Text>Inspired from:</Text> */}
         <ul>
           <li>
             <a

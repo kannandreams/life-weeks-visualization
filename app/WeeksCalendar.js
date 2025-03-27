@@ -104,16 +104,28 @@ const WeeksCalendar = ({ birthdate, age }) => {
 
   let aheadMessage
   if (totalDaysAhead < 0) {
-    aheadMessage = <Title order={5}>Sorry 😞 Your story continues… in the next realm. Enjoy your afterlife!"</Title> // Or any other message you want.
-  } 
-  else if (totalDaysAhead < 1000) {
-    aheadMessage = <Title order={5} ><Text span c="red" fw={700}>{totalDaysAhead}</Text> days more only. 
-    Make every sunrise 🌅 count, every moment meaningful! ❤️</Title> // Or any other message you want.
-  }
-  else {
     aheadMessage = (
       <Title order={5}>
-        <Text span c="red" fw={700}>{totalDaysAhead}</Text> days more await — how will you make them matter? 🚀"
+        Sorry 😞 Your story continues&hellip; in the next realm. Enjoy your
+        afterlife!
+      </Title>
+    )
+  } else if (totalDaysAhead < 1000) {
+    aheadMessage = (
+      <Title order={5}>
+        <Text span c="red" fw={700}>
+          {totalDaysAhead}
+        </Text>{' '}
+        days more only. Make every sunrise 🌅 count, every moment meaningful!
+      </Title>
+    )
+  } else {
+    aheadMessage = (
+      <Title order={5}>
+        <Text span c="red" fw={700}>
+          {totalDaysAhead}
+        </Text>{' '}
+        days more await — how will you make them matter? 🚀
       </Title>
     )
   }
@@ -121,10 +133,15 @@ const WeeksCalendar = ({ birthdate, age }) => {
   return (
     <Box id="timeline-visualization" p="md">
       <Group p="md">
-          <Title order={5}>You've traveled <Text span c="red" fw={700}>{totalDaysLived}</Text> days on your journey 💪
-          {aheadMessage}</Title>
-          {/* You have <b>{totalDaysAhead}</b> days ahead of you. */}
-        
+        <Title order={5}>
+          You&apos;ve traveled{' '}
+          <Text span c="red" fw={700}>
+            {totalDaysLived}
+          </Text>{' '}
+          days on your journey 💪
+          {aheadMessage}
+        </Title>
+        {/* You have <b>{totalDaysAhead}</b> days ahead of you. */}
       </Group>
       <Paper ref={plotRef}></Paper>
     </Box>

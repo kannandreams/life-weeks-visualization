@@ -21,7 +21,7 @@ const Credits = ({}) => {
         </Text>
         </Group>
         <Divider />
-        {/* <Text>Inspired from:</Text> */}
+        <Text>Also Inspired from</Text>
         <ul>
           <li>
             <a
@@ -45,6 +45,14 @@ const Credits = ({}) => {
               target="_blank"
             >
               Sir Ray Avery
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.goodreads.com/book/show/54785515-four-thousand-weeks"
+              target="_blank"
+            >
+              Four Thousand Weeks by Oliver Burkeman
             </a>
           </li>
         </ul>

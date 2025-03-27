@@ -2,7 +2,13 @@
 const nextConfig = {
     reactStrictMode: true,
     images: {
-      domains: ["cdn.buymeacoffee.com"],
-    },};
+      remotePatterns: [
+        {
+          protocol: "https",
+          hostname: "cdn.buymeacoffee.com",
+        },
+      ],
+    },
+  };
 
 export default nextConfig;

@@ -131,7 +131,7 @@ const WeeksCalendar = ({ birthdate, age }) => {
   }
 
   return (
-    <Box id="timeline-visualization" p="md">
+    <Box id="timeline-visualization" p="0">
       <Group p="md">
         <Title order={5}>
           You&apos;ve traveled{' '}

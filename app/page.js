@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react'
 import { useDisclosure } from '@mantine/hooks'
-import { Grid, Box } from '@mantine/core'
-import { useForm } from '@mantine/form';
+import { Grid, Box, Loader, Tooltip } from '@mantine/core'
+import { useForm } from '@mantine/form'
 
 import html2canvas from 'html2canvas'
 import {
@@ -16,22 +16,23 @@ import {
 
 import WeeksCalendar from './WeeksCalendar'
 
-const exportToPNG = () => {
-  const timelineElement = document.getElementById('timeline-visualization');
+const exportToPNG = async () => {
+  const timelineElement = document.getElementById('timeline-visualization')
 
   if (!timelineElement) {
-    console.error("Timeline element not found!");
-    return;
+    console.error('Timeline element not found!')
+    return
   }
 
-  html2canvas(timelineElement).then((canvas) => {
+  try {
+    const canvas = await html2canvas(timelineElement)
     const link = document.createElement('a')
     link.download = 'timeline.png'
     link.href = canvas.toDataURL()
     link.click()
-  }).catch(err => {
-    console.error("Error exporting to PNG:", err);
-  });
+  } catch (err) {
+    console.error('Error exporting to PNG:', err)
+  }
 }
 
 const HomePage = () => {
@@ -41,13 +42,15 @@ const HomePage = () => {
   const [showVisualization, setShowVisualization] = useState(false)
   const [opened, { toggle }] = useDisclosure()
   const today = new Date().toISOString().split('T')[0]
-  const currentYear = new Date().getFullYear();
-  const earliestDate = new Date(1900, 0, 1).toISOString().split('T')[0]; // January 1, 1900
+  const currentYear = new Date().getFullYear()
+  const earliestDate = new Date(1900, 0, 1).toISOString().split('T')[0] // January 1, 1900
+  const [loading, setLoading] = useState(false)
 
   const handleSubmit = () => {
-    if (!form.values.birthdate || !form.values.age) {  //Basic check for values
-      alert('Please enter both date of birth and age.');
-      return;
+    if (!form.values.birthdate || !form.values.age) {
+      //Basic check for values
+      alert('Please enter both date of birth and age.')
+      return
     }
     setShowVisualization(true)
   }
@@ -57,24 +60,32 @@ const HomePage = () => {
       birthdate: '',
       age: '',
     },
-   
-  });
+  })
+
+  const handleExport = async () => {
+    setLoading(true)
+    try {
+      await exportToPNG() // Ensure this function returns a Promise
+    } catch (error) {
+      console.error('Export failed:', error)
+    }
+    setLoading(false)
+  }
 
   return (
     <Box>
       <Container size="xl">
         <Grid>
-          <Grid.Col span={{ base: 12, xs: 8 }}>
-          <form onSubmit={form.onSubmit(handleSubmit)}>
-            <Flex
-              mih={80}
-              gap="md"
-              justify="flex-start"
-              align="flex-end"
-              wrap="wrap"
-              direction="row"
-            >
-             
+          <Grid.Col span={{ base: 12, xs: 12 }}>
+            <form onSubmit={form.onSubmit(handleSubmit)}>
+              <Flex
+                mih={80}
+                gap="md"
+                justify="flex-start"
+                align="flex-end"
+                wrap="wrap"
+                direction="row"
+              >
                 <TextInput
                   size="md"
                   type="date"
@@ -82,14 +93,13 @@ const HomePage = () => {
                   label="Date of Birth"
                   height="20px"
                   max={today}
-                  min={earliestDate}  // Add a minimum date
+                  min={earliestDate} // Add a minimum date
                   value={birthdate}
                   {...form.getInputProps('birthdate')}
                   onChange={(e) => {
-                    form.setFieldValue('birthdate', e.target.value);
-                    setBirthdate(e.target.value);
+                    form.setFieldValue('birthdate', e.target.value)
+                    setBirthdate(e.target.value)
                   }}
-                  
                 />
 
                 <TextInput
@@ -103,12 +113,10 @@ const HomePage = () => {
                   withAsterisk
                   {...form.getInputProps('age')}
                   onChange={(e) => {
-                    const newValue = e.target.value;
-                    form.setFieldValue('age', newValue);
+                    const newValue = e.target.value
+                    form.setFieldValue('age', newValue)
                     setAge(newValue)
-
                   }}
-                  
                 />
                 <Button
                   id="btnVisualize"
@@ -125,19 +133,26 @@ const HomePage = () => {
                 </Button>
 
                 {showVisualization && (
+                  <Tooltip label="Download as Image">
                   <Button
                     id="btnPrint"
                     variant="filled"
-                    color="rgba(0, 0, 0, 1)"
+                    color="#58D68D"
+                    c="black"
                     size="md"
                     radius="xs"
-                    onClick={exportToPNG}
+                    onClick={handleExport}
+                    disabled={loading}
                   >
-                    Export to PNG
+                    {loading ? (
+                      <Loader size={30} color="black" />
+                    ) : (
+                      'Put It on Your Wall'
+                    )}
                   </Button>
+                  </Tooltip>
                 )}
-              
-            </Flex>
+              </Flex>
             </form>
             {showVisualization && (
               <Box id="timeline-visualization">

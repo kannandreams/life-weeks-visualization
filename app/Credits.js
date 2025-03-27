@@ -8,15 +8,15 @@ const Credits = ({}) => {
     <Box>
       <Modal opened={opened} size="60%" onClose={close} >
         <Group p="md">
-        <Title order={3}>Credits</Title>
+        {/* <Title span order={3}>Credits</Title> */}
         <Text fw={700}>
           <a
             href="https://www.epicsheets.com/the-30000-days-of-your-life-visualized/"
             target="_blank"
           >
-            Epic Sheets {' '}
+            Epic Sheets{' '}
           </a>
-          for the inspiration and the idea to convert the &quot; 30,000 Days of
+          &nbsp; for the inspiration and the idea to convert the &quot; 30,000 Days of
           Your Life &quot; Excel sheet into a web app.
         </Text>
         </Group>

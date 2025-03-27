@@ -42,6 +42,14 @@ export default function RootLayout({ children }) {
           content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
           metadata={metadata}
         />
+        <meta property="og:title" content="timeline 4 me" />
+        <meta property="og:description" content="See Your Life in Weeks" />
+        <meta property="og:image" content="https://www.timeline4.me/banner.jpg" />
+        <meta property="og:url" content="https://www.timeline4.me" />
+        <meta name="twitter:title" content="See Your Life in Weeks" />
+        <meta name="twitter:description" content="A brief description of your website" />
+        <meta name="twitter:image" content="https://www.timeline4.me/banner.jpg" />
+        <meta name="twitter:card" content="summary_large_image" />
       </head>
       <body
         style={{

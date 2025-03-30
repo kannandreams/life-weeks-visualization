@@ -15,6 +15,7 @@ import {
 } from '@mantine/core'
 
 import WeeksCalendar from './WeeksCalendar'
+import SponserCoffee from './SponserCoffee'
 
 const exportToPNG = async () => {
   const timelineElement = document.getElementById('timeline-visualization')
@@ -162,6 +163,11 @@ const HomePage = () => {
           </Grid.Col>
         </Grid>
       </Container>
+      {showVisualization && (
+              
+                <SponserCoffee />
+              
+            )}
     </Box>
   )
 }

@@ -77,7 +77,7 @@ export default function RootLayout({ children }) {
                 </Group>
                 <Group align="center" px="md">
                   <Credits />
-                  <SponserCoffee />
+                  {/* <SponserCoffee /> */}
                   <SocialShareButtons
                     url="https://www.timeline4.me/"
                     summary="See the weeks you’ve lived and the ones still ahead!"

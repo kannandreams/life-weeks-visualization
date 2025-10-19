@@ -1,12 +1,12 @@
-name: Deploy React App to GitHub Pages
+name: Deploy Next.js App to GitHub Pages
 
 on:
   push:
     branches:
-      - main # or 'master' if that’s your default branch
+      - main
 
 permissions:
-  contents: write # needed to push to gh-pages branch
+  contents: write
 
 jobs:
   build-deploy:
@@ -27,8 +27,11 @@ jobs:
       - name: Build project
         run: npm run build
 
+      - name: Add .nojekyll file
+        run: touch ./out/.nojekyll
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          publish_dir: ./out

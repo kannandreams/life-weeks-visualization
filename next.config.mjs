@@ -1,7 +1,12 @@
 /** @type {import('next').NextConfig} */
+const isProd = process.env.NODE_ENV === 'production';
+const isGithubPages = process.env.DEPLOY_TARGET === 'github';
+
 const nextConfig = {
-    output: 'export',
-    basePath: '/life-weeks-visualization',
+    // Only use export mode for GitHub Pages
+    ...(isGithubPages && { output: 'export' }),
+    // Only use basePath for GitHub Pages
+    ...(isGithubPages && { basePath: '/life-weeks-visualization' }),
     reactStrictMode: true,
     images: {
       unoptimized: true,

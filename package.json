@@ -2,6 +2,7 @@
   "name": "life-weeks-visualization",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://kannandreams.github.io/life-weeks-visualization/",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
